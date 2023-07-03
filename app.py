@@ -52,7 +52,9 @@ choicesvar = StringVar(value=choices)
 
 def whatsSelected():
     try:
-        # print(dict1[elList.curselection()[0]])
+
+        tabTamp = elList.curselection()
+
         if len(elList.curselection()) < 2:
             messagebox.showinfo(message='Please choose at least two elements')
             return
@@ -69,14 +71,22 @@ def whatsSelected():
             tbElement.grid(column=1, row=i+2, sticky=E)
 
             tbMass = ttk.Entry(mainframe2, name="tbMass"+str(i))
-            # tbMass.configure(state="readonly")
             tbMass.grid(column=2, row=i+2, sticky=E)
 
+        # BACK BUTTON
         btnBack = ttk.Button(mainframe2, text="BACK", command=goBack, name="btnBack")
-        btnBack.grid(column=1, row=len(elList.curselection()) + 2, sticky=W)
+        btnBack.grid(column=1, row=len(elList.curselection()) + 4, sticky=W)
 
+        # LABEL + ALLOY WEIGHT
+        lblElement = ttk.Label(mainframe2, text="Enter alloy weight: ")
+        lblElement.grid(column=1, row=len(elList.curselection()) + 3, sticky=E)
+
+        tbElement = ttk.Entry(mainframe2, name="tbMass", width=5)
+        tbElement.grid(column=2, row=len(elList.curselection()) + 3, sticky=W)
+
+        # BTN CALCULATE
         btnCalculate = ttk.Button(mainframe2, text="CALCULATE", command=calculate, name="btnCalculate")
-        btnCalculate.grid(column=2, row=len(elList.curselection()) + 2, sticky=E)
+        btnCalculate.grid(column=2, row=len(elList.curselection()) + 4, sticky=E)
 
         mainframe2.tkraise()
 
@@ -94,14 +104,23 @@ def goBack():
         pass
 
 def calculate():
+    tabHelper = elList.curselection()
     controlSum = 0
-    for i, item in enumerate(elList.curselection()):
+    print("HERE: ", tabHelper)
+    for i, item in enumerate(tabHelper):
         atInput = float(mainframe2.nametowidget("tbPrc"+str(i)).get())
         controlSum = controlSum + (atInput * dict1[item].atomicWeight) / AVG_SIMPLIFIED
 
-    for i, item in enumerate(elList.curselection()):
+        # print("====================")
+        # print("CONTROL SUM: ", controlSum)
+        # print("atInput: ", atInput)
+        # print("dict1[item].atomicWeight", dict1[item].atomicWeight)
+        # print("AVG_SIMPLIFIED: ", AVG_SIMPLIFIED)
+
+    for i, item in enumerate(tabHelper):
+        sampleMass = float(mainframe2.nametowidget("tbMass").get())
         atInput = float(mainframe2.nametowidget("tbPrc"+str(i)).get())
-        answer = ((atInput * dict1[item].atomicWeight) / AVG_SIMPLIFIED ) / controlSum * 100
+        answer = (((atInput * dict1[item].atomicWeight) / AVG_SIMPLIFIED ) / controlSum) * sampleMass
         mainframe2.nametowidget("tbMass"+str(i)).insert(0, str(answer))
     
     print(controlSum)
