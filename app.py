@@ -133,6 +133,7 @@ def calculate():
         
         atInput = float(mainframe2.nametowidget("tbPrc"+str(i)).get())
         answer = round(atInput * dict1[item].atomicWeight / AVG_SIMPLIFIED  / controlSum * sampleMass, 4)
+        mainframe2.nametowidget("tbMass"+str(i)).delete(0, "end")
         mainframe2.nametowidget("tbMass"+str(i)).insert(0, str(answer))
 
 
