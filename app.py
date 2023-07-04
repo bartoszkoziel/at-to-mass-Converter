@@ -48,7 +48,10 @@ dict1 = {
     23: Element("W", 183.85)
 }
 
-choices = ["Zr", "Cu", "Al", "Ni", "Ag", "Fe", "Si", "Sn", "B", "C", "P", "Y", "Co", "Mn", "V", "Ca", "Nb", "Cr", "Mo", "Ga", "La", "Nd", "Ti", "W"]
+choices = []
+for key in dict1:
+    choices.append(dict1[key].symbol)
+
 choicesvar = StringVar(value=choices)
 
 def whatsSelected():
