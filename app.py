@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox
 
 AVG_SIMPLIFIED = 6.02214
+tempvar = 0
 
 root = Tk()
 root.title("at-to-mass-Converter")
@@ -52,8 +53,10 @@ choicesvar = StringVar(value=choices)
 
 def whatsSelected():
     try:
-
+        global tempvar
+        tempvar = elList.curselection()
         tabTamp = elList.curselection()
+        print("TEB_TEMP: ", tabTamp)
 
         if len(elList.curselection()) < 2:
             messagebox.showinfo(message='Please choose at least two elements')
@@ -104,7 +107,13 @@ def goBack():
         pass
 
 def calculate():
-    tabHelper = elList.curselection()
+
+    global tempvar
+
+    tabHelper = tempvar
+
+    print("TAB_HELPER: ", tabHelper)
+    print("TEMPVAR: ", tempvar)
     controlSum = 0
     print("HERE: ", tabHelper)
     for i, item in enumerate(tabHelper):
@@ -128,7 +137,7 @@ def calculate():
 
 
 # FRAME 1
-elList = Listbox(mainframe1, listvariable=choicesvar, selectmode=EXTENDED)
+elList = Listbox(mainframe1, listvariable=choicesvar, selectmode=EXTENDED, name="lbElements")
 elList.grid(column=1, row=1, sticky=(W))
 
 ttk.Label(mainframe1, text="PRESS `CONTROL` WHEN SELECTING MULTIPLE ELEMENTS").grid(column=1, row=2, columnspan=3 ,sticky=W)
