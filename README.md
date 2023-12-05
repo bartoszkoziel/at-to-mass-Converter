@@ -1,4 +1,4 @@
-# at-to-mass-Converter
+# at-to-wt-Converter
 Simple python app that allows to calculate weight of ingriedients of an alloy. Created using python and tkinter.  
 
 Enter the %at and recive %wt.
